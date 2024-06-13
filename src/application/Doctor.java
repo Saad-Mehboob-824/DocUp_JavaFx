@@ -7,7 +7,7 @@ public class Doctor {
     private String cnic;
     private String speciality;
 
-    // Constructor      
+    // Constructor
     public Doctor(int id, String password, String name, String cnic, String speciality) {
         this.id = id;
         this.setPassword(password);
@@ -60,11 +60,11 @@ public class Doctor {
                 '}';
     }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

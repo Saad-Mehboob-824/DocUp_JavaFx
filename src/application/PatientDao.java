@@ -35,26 +35,27 @@ public class PatientDao {
     }
 
     // Create a new patient
-//    public void addPatient(Patient patient) throws SQLException {
-//        String sql = "INSERT INTO patients (id, password, name, cnic, symptoms) VALUES("
-//        		+patient.getId() + ','
-//        		+patient.getPassword()+','
-//        		+patient.getName()+','
-//        		+patient.getCnic()+','
-//        		+patient.getSymptoms()+");\r\n";
-//        
-//        connect();
-//
-//        try (PreparedStatement statement = jdbcConnection.prepareStatement(sql)) {
-//            statement.execute(sql);
-//        } finally {
-//            disconnect();
-//        }
-//    }
-    
+    // public void addPatient(Patient patient) throws SQLException {
+    // String sql = "INSERT INTO patients (id, password, name, cnic, symptoms)
+    // VALUES("
+    // +patient.getId() + ','
+    // +patient.getPassword()+','
+    // +patient.getName()+','
+    // +patient.getCnic()+','
+    // +patient.getSymptoms()+");\r\n";
+    //
+    // connect();
+    //
+    // try (PreparedStatement statement = jdbcConnection.prepareStatement(sql)) {
+    // statement.execute(sql);
+    // } finally {
+    // disconnect();
+    // }
+    // }
+
     public void addPatient(Patient patient) throws SQLException {
         String sql = "INSERT INTO patients (id, password, name, cnic, symptoms) VALUES (?, ?, ?, ?, ?)";
-        
+
         connect();
 
         try (PreparedStatement statement = jdbcConnection.prepareStatement(sql)) {
@@ -69,7 +70,6 @@ public class PatientDao {
         }
     }
 
-
     // Retrieve all patients
     public List<Patient> getAllPatients() throws SQLException {
         List<Patient> listPatient = new ArrayList<>();
@@ -77,7 +77,7 @@ public class PatientDao {
         connect();
 
         try (Statement statement = jdbcConnection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+                ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
@@ -142,7 +142,6 @@ public class PatientDao {
         return rowUpdated;
     }
 
-    // Delete a patient by ID
     public boolean deletePatient(int id) throws SQLException {
         String sql = "DELETE FROM patients WHERE id = ?";
         connect();
@@ -156,4 +155,39 @@ public class PatientDao {
         }
         return rowDeleted;
     }
+
+    public String getMedicines(int patientId) throws SQLException {
+        String medicine = "";
+        String sql = "SELECT medicine_purchased FROM patients WHERE id = ?";
+        connect();
+
+        try (PreparedStatement statement = jdbcConnection.prepareStatement(sql)) {
+            statement.setInt(1, patientId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    medicine = resultSet.getString("medicine_purchased");
+                }
+            }
+        } finally {
+            disconnect();
+        }
+
+        return medicine;
+    }
+
+    public boolean storeMedicines(int patientId, String medicine) throws SQLException {
+        String sql = "UPDATE patients SET medicine_purchased = ? WHERE id = ?";
+        connect();
+
+        boolean rowUpdated = false;
+        try (PreparedStatement statement = jdbcConnection.prepareStatement(sql)) {
+            statement.setString(1, medicine);
+            statement.setInt(2, patientId);
+            rowUpdated = statement.executeUpdate() > 0;
+        } finally {
+            disconnect();
+        }
+        return rowUpdated;
+    }
+
 }

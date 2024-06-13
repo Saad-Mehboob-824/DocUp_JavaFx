@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PatientController">
    <children>
       <SplitPane dividerPositions="0.532608695652174" layoutX="198.0" layoutY="100.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
@@ -32,9 +31,10 @@
                            <children>
                               <Text layoutX="22.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book Appointment" />
                               <TextField fx:id="Book_DocID" layoutX="73.0" layoutY="47.0" promptText="DoctorID" />
-                              <TextField fx:id="Book_Time" layoutX="73.0" layoutY="87.0" promptText="Time" />
+                              <TextField fx:id="Book_Time" layoutX="73.0" layoutY="87.0" promptText="yyyy-MM-dd'T'HH:mm[:ss]" text="0000-00-00T00:00" />
                               <Button fx:id="Book" layoutX="76.0" layoutY="130.0" mnemonicParsing="false" onAction="#BookAppointment" text="Book" />
                               <Button fx:id="Book1" layoutX="141.0" layoutY="130.0" mnemonicParsing="false" onAction="#BookOnlineAppointment" text="Book Online" />
+                              <Button fx:id="CommentButton" layoutX="104.0" layoutY="163.0" mnemonicParsing="false" onAction="#Comment" text="Comments" />
                            </children>
                         </AnchorPane>
                     </items>
@@ -60,8 +60,8 @@
                               <Text layoutX="91.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Appointment" />
                               <TextField fx:id="Update_AppID1" layoutX="30.0" layoutY="43.0" promptText="AppointmentID" />
                               <Button fx:id="Cancel_Search1" layoutX="188.0" layoutY="43.0" mnemonicParsing="false" onAction="#UpdateSeachDocByID" text="Search" />
-                              <TextField fx:id="Update_DocID" layoutX="54.0" layoutY="76.0" />
-                              <TextField fx:id="Update_AppTime" layoutX="54.0" layoutY="108.0" />
+                              <TextField fx:id="Update_DocID" layoutX="54.0" layoutY="76.0" promptText="Doctor ID" />
+                              <TextField fx:id="Update_AppTime" layoutX="54.0" layoutY="108.0" promptText="Appointment Time" />
                               <Button fx:id="Update_app" layoutX="103.0" layoutY="138.0" mnemonicParsing="false" onAction="#UpdateAppointment" text="Update" />
                            </children>
                         </AnchorPane>
@@ -71,5 +71,6 @@
             </AnchorPane>
         </items>
       </SplitPane>
+      <Button fx:id="MadicalStore" layoutX="500.0" layoutY="2.0" mnemonicParsing="false" onAction="#MadicalStore" prefHeight="31.0" prefWidth="100.0" text="Madical Store" AnchorPane.bottomAnchor="369.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

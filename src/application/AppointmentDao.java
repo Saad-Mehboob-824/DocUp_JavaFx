@@ -102,34 +102,28 @@ public class AppointmentDao {
         return appointment;
     }
 
-    // Update an appointment
-    public boolean updateAppointment(Appointment appointment) throws SQLException {
-        String sql = "UPDATE appointments SET patient_id = ?, doctor_id = ?, appointment_time = ?, status = ? WHERE appointment_id = ?";
+    public void updateAppointment(int appointmentId, LocalDateTime newDate) throws SQLException {
+        String sql = "UPDATE appointments SET appointment_time = ? WHERE appointment_id = ?";
         connect();
 
-        boolean rowUpdated;
         try (PreparedStatement statement = jdbcConnection.prepareStatement(sql)) {
-            statement.setInt(1, appointment.getPatientId());
-            statement.setInt(2, appointment.getDoctorId());
-            statement.setTimestamp(3, Timestamp.valueOf(appointment.getAppointmentTime()));
-            statement.setString(4, appointment.getStatus());
-            statement.setInt(5, appointment.getAppointmentId());
-
-            rowUpdated = statement.executeUpdate() > 0;
+            statement.setObject(1, newDate != null ? Timestamp.valueOf(newDate) : null, Types.TIMESTAMP);
+            statement.setInt(2, appointmentId);
+            statement.executeUpdate();
         } finally {
             disconnect();
         }
-        return rowUpdated;
     }
 
     // Delete an appointment by ID
     public boolean deleteAppointment(int appointmentId) throws SQLException {
-        String sql = "DELETE FROM appointments WHERE appointment_id = ?";
+        String sql = "UPDATE appointments SET status= ? WHERE appointment_id = ?";
         connect();
 
         boolean rowDeleted;
         try (PreparedStatement statement = jdbcConnection.prepareStatement(sql)) {
-            statement.setInt(1, appointmentId);
+            statement.setString(1, "Cancelled");
+            statement.setInt(2, appointmentId);
             rowDeleted = statement.executeUpdate() > 0;
         } finally {
             disconnect();
@@ -137,3 +131,8 @@ public class AppointmentDao {
         return rowDeleted;
     }
 }
+
+
+
+
+

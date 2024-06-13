@@ -57,7 +57,7 @@ public class DoctorDAO {
         connect();
 
         try (Statement statement = jdbcConnection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+                ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
@@ -66,7 +66,7 @@ public class DoctorDAO {
                 String cnic = resultSet.getString("cnic");
                 String speciality = resultSet.getString("speciality");
 
-                Doctor doctor = new Doctor(id,password, name, cnic, speciality);
+                Doctor doctor = new Doctor(id, password, name, cnic, speciality);
                 listDoctor.add(doctor);
             }
         } finally {
@@ -88,11 +88,11 @@ public class DoctorDAO {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     String password = resultSet.getString("password");
-                	String name = resultSet.getString("name");
+                    String name = resultSet.getString("name");
                     String cnic = resultSet.getString("cnic");
                     String speciality = resultSet.getString("speciality");
 
-                    doctor = new Doctor(id,password, name, cnic, speciality);
+                    doctor = new Doctor(id, password, name, cnic, speciality);
                 }
             }
         } finally {
@@ -103,17 +103,16 @@ public class DoctorDAO {
     }
 
     // Update a doctor
-    public boolean updateDoctor(Doctor doctor) throws SQLException {
-        String sql = "UPDATE doctors SET password = ?, name = ?, cnic = ?, speciality = ? WHERE id = ?";
+    public boolean updateDoctor(int id, String name, String cnic, String speciality) throws SQLException {
+        String sql = "UPDATE doctors SET  name = ?, cnic = ?, speciality = ? WHERE id = ?";
         connect();
 
         boolean rowUpdated;
         try (PreparedStatement statement = jdbcConnection.prepareStatement(sql)) {
-        	statement.setString(1, doctor.getPassword());
-            statement.setString(2, doctor.getName());
-            statement.setString(3, doctor.getCnic());
-            statement.setString(4, doctor.getSpeciality());
-            statement.setInt(5, doctor.getId());
+            statement.setString(1, name);
+            statement.setString(2, cnic);
+            statement.setString(3, speciality);
+            statement.setInt(4, id);
 
             rowUpdated = statement.executeUpdate() > 0;
         } finally {
